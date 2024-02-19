@@ -1,14 +1,13 @@
-package com.crmspringbackend;
+package com.backendcrm.backendcrm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CrmSpringBackendApplication {
+public class BackendCrmApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CrmSpringBackendApplication.class, args);
-		System.out.println(" hey! ");
+		SpringApplication.run(BackendCrmApplication.class, args);
 	}
 
 }

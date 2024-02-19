@@ -1,10 +1,10 @@
-package com.crmspringbackend;
+package com.backendcrm.backendcrm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CrmSpringBackendApplicationTests {
+class BackendCrmApplicationTests {
 
 	@Test
 	void contextLoads() {

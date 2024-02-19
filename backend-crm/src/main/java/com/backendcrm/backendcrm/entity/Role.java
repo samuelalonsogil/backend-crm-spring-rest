@@ -1,6 +1,5 @@
-package com.crmspringbackend.entity;
+package com.backendcrm.backendcrm.entity;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -28,4 +27,5 @@ public class Role {
     public Role(String name) {
         this.name = name;
     }
+
 }
