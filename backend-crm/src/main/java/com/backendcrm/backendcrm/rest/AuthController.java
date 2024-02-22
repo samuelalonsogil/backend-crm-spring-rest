@@ -4,7 +4,6 @@ import com.backendcrm.backendcrm.dao.RoleRepository;
 import com.backendcrm.backendcrm.dao.UserRepository;
 import com.backendcrm.backendcrm.dto.LoginDto;
 import com.backendcrm.backendcrm.dto.SignUpDto;
-import com.backendcrm.backendcrm.entity.Role;
 import com.backendcrm.backendcrm.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/auth")
@@ -70,8 +69,8 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword() ) );
         user.setEnabled(signUpDto.isEnabled() );
 
-        user.setRoles( Arrays.asList( roleRepository.findByName("ROLE_USER").get() ) );
-        if (user.isEnabled() ) user.setRoles( Arrays.asList( roleRepository.findByName("ROLE_USER").get(), roleRepository.findByName("ROLE_ADMIN").get() ) );
+        user.setRoles(List.of(roleRepository.findByName("ROLE_USER").orElseThrow()));
+        if (user.isEnabled() ) user.setRoles( Arrays.asList( roleRepository.findByName("ROLE_USER").orElseThrow(), roleRepository.findByName("ROLE_ADMIN").orElseThrow() ) );
 
         userRepository.save(user);
         return new ResponseEntity<>( "User registered successfully!. " , HttpStatus.OK);

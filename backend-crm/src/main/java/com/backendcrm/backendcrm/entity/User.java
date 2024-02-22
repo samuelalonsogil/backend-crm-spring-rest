@@ -1,5 +1,6 @@
 package com.backendcrm.backendcrm.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -57,4 +58,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id") )
     private Collection<Role> roles;
 
+    /*convenience method*/
+    public void addRole(Role role){
+        if (roles == null) roles = new ArrayList<>();
+        roles.add(role);
+    }
 }
