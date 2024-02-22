@@ -24,23 +24,16 @@ public class UserServiceImpl implements UserService{
     public List<User> listAll() {
         return userRepository.findAll();
     }
-
     @Override
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<User> findByUsernameOrEmail(String usernameOrEmail) {
+        return userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+        User user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow( () ->
-                        new UsernameNotFoundException("User not found with username: " + username) );
+                        new UsernameNotFoundException("User not found with username: " + usernameOrEmail) );
 
         Set<GrantedAuthority> authorities = user
                 .getRoles()

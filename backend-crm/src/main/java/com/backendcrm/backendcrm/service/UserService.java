@@ -9,7 +9,6 @@ import java.util.Optional;
 public interface UserService extends UserDetailsService {
 
     List<User> listAll();
-    Optional<User> findByUsername(String username);
+    Optional<User> findByUsernameOrEmail(String usernameOrEmail);
 
-    User findByEmail(String email);
 }

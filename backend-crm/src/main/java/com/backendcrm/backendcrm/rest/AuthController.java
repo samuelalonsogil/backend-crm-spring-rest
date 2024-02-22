@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @RestController
@@ -50,9 +51,14 @@ public class AuthController {
     public ResponseEntity <?> registerUser(@RequestBody SignUpDto signUpDto){
         System.out.println(" registerUser ");
 
-        /* add check for user exists in DB */
+        /* add check for user exists in DB for username*/
         if ( userRepository.existsByUsername(signUpDto.getUsername() ) ){
             return new ResponseEntity<>("Username is already taken! ", HttpStatus.BAD_REQUEST);
+        }
+
+        /* add check for user exists in DB for email */
+        if ( userRepository.existsByEmail(signUpDto.getEmail() ) ){
+            return new ResponseEntity<>("Email is already registered! ", HttpStatus.BAD_REQUEST);
         }
 
         /* create USER object */
@@ -64,10 +70,8 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword() ) );
         user.setEnabled(signUpDto.isEnabled() );
 
-        Role roles = roleRepository.findByName("ROLE_USER").get();
-        if (user.isEnabled() ) roles = roleRepository.findByName("ROLE_ADMIN").get();
-
-        user.setRoles( Collections.singleton(roles) );
+        user.setRoles( Arrays.asList( roleRepository.findByName("ROLE_USER").get() ) );
+        if (user.isEnabled() ) user.setRoles( Arrays.asList( roleRepository.findByName("ROLE_USER").get(), roleRepository.findByName("ROLE_ADMIN").get() ) );
 
         userRepository.save(user);
         return new ResponseEntity<>( "User registered successfully!. " , HttpStatus.OK);

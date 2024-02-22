@@ -3,16 +3,13 @@ package com.backendcrm.backendcrm.rest;
 import com.backendcrm.backendcrm.entity.User;
 import com.backendcrm.backendcrm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("api/users")
 public class UserController {
 
     private UserService userService;
@@ -24,16 +21,10 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> listAll(){
-        return userService.listAll();
+        return userService.listAll(); }
+    @GetMapping("/find-by-user-or-email/{usernameOrEmail}")
+    public Optional<User> findByUsernameOrEmail(@PathVariable String usernameOrEmail){
+        return userService.findByUsernameOrEmail(usernameOrEmail);
     }
 
-    @GetMapping("/find-by-username/{username}")
-    public Optional<User> findByUserName(@PathVariable String username){
-        return userService.findByUsername(username);
-    }
-
-    @GetMapping("/find-by-email/{email}")
-    public User findByEmail(@PathVariable String email){
-        return userService.findByEmail(email);
-    }
 }
